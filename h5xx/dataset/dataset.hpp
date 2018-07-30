@@ -146,7 +146,7 @@ dataset::dataset(
     }
 }
 
-inline dataset::~dataset()
+inline dataset::~dataset() noexcept(false)
 {
     if (hid_ >= 0) {
         if(H5Dclose(hid_) < 0){

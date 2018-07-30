@@ -148,7 +148,7 @@ inline attribute & attribute::operator=(attribute other)
     return *this;
 }
 
-inline attribute::~attribute()
+inline attribute::~attribute() noexcept(false)
 {
     if (hid_ >= 0) {
         if(H5Aclose(hid_) < 0){

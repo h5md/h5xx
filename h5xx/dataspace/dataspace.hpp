@@ -241,7 +241,7 @@ dataspace::dataspace(boost::array<hsize_t, N> const& dims, boost::array<hsize_t,
         throw error("creating simple dataspace");
 }
 
-inline dataspace::~dataspace()
+inline dataspace::~dataspace() noexcept(false)
 {
     if (hid_ >= 0) {
         if(H5Sclose(hid_) < 0)
