@@ -92,7 +92,7 @@ public:
     dataspace & operator=(dataspace other);
 
     /** default destructor */
-    ~dataspace();
+    ~dataspace() noexcept(false);
 
     /** return HDF5 object ID */
     hid_t hid() const
@@ -151,6 +151,9 @@ public:
      * return the number of elements currently selected from the dataspace
      */
     hssize_t get_select_npoints() const;
+    
+    /** close the dataspace */
+    void close();
 
 private:
     /** HDF5 object ID */
@@ -242,6 +245,11 @@ dataspace::dataspace(boost::array<hsize_t, N> const& dims, boost::array<hsize_t,
 }
 
 inline dataspace::~dataspace() noexcept(false)
+{
+    close();
+}
+
+inline void dataspace::close()
 {
     if (hid_ >= 0) {
         if(H5Sclose(hid_) < 0)

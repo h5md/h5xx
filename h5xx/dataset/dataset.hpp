@@ -41,7 +41,7 @@ public:
     );
 
     /** destructor, implicitly closes the dataset's hid_ */
-    ~dataset();
+    ~dataset() noexcept(false);
 
     /**
      * deleted copy constructor
@@ -77,6 +77,9 @@ public:
 
     /** return copy of dataset's type */
     hid_t get_type() const;
+    
+    /** close the dataset */
+    void close();
 
 private:
     /** HDF5 handle of the dataset */
@@ -147,6 +150,11 @@ dataset::dataset(
 }
 
 inline dataset::~dataset() noexcept(false)
+{
+    close();
+}
+
+inline void dataset::close()
 {
     if (hid_ >= 0) {
         if(H5Dclose(hid_) < 0){

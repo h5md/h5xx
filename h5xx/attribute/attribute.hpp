@@ -48,7 +48,7 @@ public:
     attribute & operator=(attribute other);
 
     /** default destructor */
-    ~attribute();
+    ~attribute() noexcept(false);
 
     /** deduce dataspace from attribute */
     operator dataspace() const;
@@ -98,6 +98,9 @@ public:
      * get_name(attribute const&).
      */
     std::string name() const;
+    
+    /** close the attribute */
+    void close();
 
 private:
     /** HDF5 object ID */
@@ -149,6 +152,11 @@ inline attribute & attribute::operator=(attribute other)
 }
 
 inline attribute::~attribute() noexcept(false)
+{
+    close();
+}
+
+inline void attribute::close()
 {
     if (hid_ >= 0) {
         if(H5Aclose(hid_) < 0){
