@@ -48,7 +48,11 @@ public:
     attribute & operator=(attribute other);
 
     /** default destructor */
-    ~attribute() noexcept(false);
+    ~attribute()
+#if __cplusplus >= 201103L
+    noexcept(false)
+#endif
+    ;
 
     /** deduce dataspace from attribute */
     operator dataspace() const;
@@ -151,7 +155,10 @@ inline attribute & attribute::operator=(attribute other)
     return *this;
 }
 
-inline attribute::~attribute() noexcept(false)
+inline attribute::~attribute()
+#if __cplusplus >= 201103L
+noexcept(false)
+#endif
 {
     close();
 }

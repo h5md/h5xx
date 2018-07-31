@@ -41,7 +41,11 @@ public:
     );
 
     /** destructor, implicitly closes the dataset's hid_ */
-    ~dataset() noexcept(false);
+    ~dataset()
+#if __cplusplus >= 201103L
+    noexcept(false)
+#endif
+    ;
 
     /**
      * deleted copy constructor
@@ -149,7 +153,10 @@ dataset::dataset(
     }
 }
 
-inline dataset::~dataset() noexcept(false)
+inline dataset::~dataset()
+#if __cplusplus >= 201103L
+noexcept(false)
+#endif
 {
     close();
 }

@@ -92,7 +92,11 @@ public:
     dataspace & operator=(dataspace other);
 
     /** default destructor */
-    ~dataspace() noexcept(false);
+    ~dataspace()
+#if __cplusplus >= 201103L
+    noexcept(false)
+#endif
+    ;
 
     /** return HDF5 object ID */
     hid_t hid() const
@@ -244,7 +248,10 @@ dataspace::dataspace(boost::array<hsize_t, N> const& dims, boost::array<hsize_t,
         throw error("creating simple dataspace");
 }
 
-inline dataspace::~dataspace() noexcept(false)
+inline dataspace::~dataspace()
+#if __cplusplus >= 201103L
+noexcept(false)
+#endif
 {
     close();
 }
