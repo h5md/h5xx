@@ -72,6 +72,8 @@ public:
             if (!optional)
                 throw error("setting fill_value failed");
     }
+    
+    virtual ~fill_value() {}
 private:
     hid_t type;
     std::vector<char> value;
