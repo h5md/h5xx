@@ -35,6 +35,7 @@ class filter_base
 {
 public:
     virtual void set_filter(hid_t) const = 0;
+    virtual ~filter_base() = default;
 };
 
 /**

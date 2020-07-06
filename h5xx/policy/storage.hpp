@@ -43,6 +43,7 @@ class storage_modifier_base
 {
 public:
     virtual void set_storage(hid_t) const = 0;
+    virtual ~storage_modifier_base() = default;
 };
 
 /**
