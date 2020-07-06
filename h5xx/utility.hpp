@@ -156,6 +156,9 @@ template <typename T, size_t size>
 struct is_array<boost::array<T, size> >
   : std::true_type {};
 
+template <typename T, size_t size>
+struct is_array<std::array<T, size>> : std::true_type {};
+
 /**
  * Data type is a MultiArray
  *

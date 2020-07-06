@@ -158,7 +158,6 @@ BOOST_AUTO_TEST_CASE( boost_multi_array_chunked )
     {
         name = "boost multi array, int, chunked, szip";
         h5xx::policy::storage::chunked storagePolicy(chunkDims);
-        //storagePolicy.add(h5xx::policy::filter::szip());  // most (?) HDF5 builds do not support SZIP
         BOOST_CHECK_NO_THROW(create_dataset(file, name, arrayWrite, storagePolicy));
         BOOST_CHECK_NO_THROW(write_dataset(file, name, arrayWrite));
         BOOST_CHECK_NO_THROW(read_dataset(file, name, arrayRead));
