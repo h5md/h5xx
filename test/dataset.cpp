@@ -104,8 +104,15 @@ BOOST_AUTO_TEST_CASE( boost_multi_array_simple )
     multi_array3 multi_array_value(boost::extents[2][3][4]);
     multi_array_value.assign(data3, data3 + 2 * 3 * 4);
     multi_array3 arrayRead(boost::extents[2][3][4]);
-    const std::string name = "boost multi array, int, default";
+    std::string name = "boost multi array, int, default";
     BOOST_CHECK_NO_THROW(create_dataset(file, name, multi_array_value));
+    BOOST_CHECK_NO_THROW(write_dataset(file, name, multi_array_value));
+    BOOST_CHECK_NO_THROW(read_dataset(file, name, arrayRead));
+    BOOST_CHECK(arrayRead == multi_array_value);
+    name += " from const ref";
+    std::array<int, 3> extents{2,3,4};
+    auto const array_ref = boost::const_multi_array_ref<int, 3>(data3, extents);
+    BOOST_CHECK_NO_THROW(create_dataset(file, name, array_ref));
     BOOST_CHECK_NO_THROW(write_dataset(file, name, multi_array_value));
     BOOST_CHECK_NO_THROW(read_dataset(file, name, arrayRead));
     BOOST_CHECK(arrayRead == multi_array_value);
