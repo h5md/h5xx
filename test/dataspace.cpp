@@ -86,12 +86,10 @@ BOOST_AUTO_TEST_CASE( construction )
         const int NI=10;
         const int NJ=NI;
         array_2d_t arr(boost::extents[NJ][NI]);
-        {
-            const int nelem = NI*NJ;
-            int data[nelem];
-            for (int i = 0; i < nelem; i++) data[i] = i;
-            arr.assign(data, data + nelem);
-        }
+        const int nelem = NI*NJ;
+        int data[nelem];
+        for (int i = 0; i < nelem; i++) data[i] = i;
+        arr.assign(data, data + nelem);
         dataspace ds;
         BOOST_CHECK_NO_THROW(ds = create_dataspace(arr));
         BOOST_CHECK(ds.valid() == true);
@@ -100,6 +98,10 @@ BOOST_AUTO_TEST_CASE( construction )
         BOOST_CHECK_EQUAL(xts.size(), std::size_t(2));
         BOOST_CHECK_EQUAL(xts[0], NI);
         BOOST_CHECK_EQUAL(xts[1], NJ);
+        std::array<int, 2> extents{NI, NJ};
+        auto const array_ref = boost::const_multi_array_ref<int, 2>(data, extents);
+        BOOST_CHECK_NO_THROW(ds = create_dataspace(array_ref));
+        BOOST_CHECK(ds.valid() == true);
     }
 
 
