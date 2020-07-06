@@ -109,6 +109,8 @@ BOOST_AUTO_TEST_CASE( boost_multi_array_simple )
     BOOST_CHECK_NO_THROW(write_dataset(file, name, multi_array_value));
     BOOST_CHECK_NO_THROW(read_dataset(file, name, arrayRead));
     BOOST_CHECK(arrayRead == multi_array_value);
+    //std::array<int, 3> extents{2,3,4};
+    //auto const_ref = boost::const_multi_array_ref(data3, extents);
 }
 
 // test chunked dataset and the filters (compression, etc) it can use
