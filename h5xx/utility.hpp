@@ -169,8 +169,6 @@ template <typename T, size_t size, typename Alloc>
 struct is_multi_array<boost::multi_array<T, size, Alloc> >
   : std::true_type {};
 
-template <typename T, size_t size>
-struct is_multi_array<boost::const_multi_array_ref<T, size>> : std::true_type {};
 /**
  * Data type is a Random Access Container
  *
