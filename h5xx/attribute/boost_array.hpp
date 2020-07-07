@@ -40,7 +40,7 @@ inline typename boost::enable_if<boost::mpl::and_<
 write_attribute(h5xxObject const& object, std::string const& name, T const& value)
 {
     typedef typename T::value_type value_type;
-    boost::array<hsize_t, 1> dims = {{ T::static_size }};
+    boost::array<hsize_t, 1> dims = {{ value.size() }};
 
     delete_attribute(object, name);
     attribute attr(object, name, ctype<value_type>::hid(), dataspace(dims));
@@ -59,7 +59,7 @@ read_attribute(h5xxObject const& object, std::string const& name)
     // open attribute
     attribute attr(object, name);
     dataspace space(attr);
-    if (space.rank() != 1 || space.extents<1>()[0] != T::static_size) {
+    if (space.rank() != 1 || space.extents<1>()[0] != T().size()) {
         throw error("attribute \"" + name + "\" of object \"" + get_name(object) + "\" has mismatching dataspace");
     }
 

@@ -150,11 +150,14 @@ inline std::string get_name(h5xxObject const& obj)
  */
 template <typename T>
 struct is_array
-  : boost::false_type {};
+  : std::false_type {};
 
 template <typename T, size_t size>
 struct is_array<boost::array<T, size> >
-  : boost::true_type {};
+  : std::true_type {};
+
+template <typename T, size_t size>
+struct is_array<std::array<T, size>> : std::true_type {};
 
 /**
  * Data type is a MultiArray
@@ -163,11 +166,14 @@ struct is_array<boost::array<T, size> >
  */
 template <typename T>
 struct is_multi_array
-  : boost::false_type {};
+  : std::false_type {};
 
 template <typename T, size_t size, typename Alloc>
 struct is_multi_array<boost::multi_array<T, size, Alloc> >
-  : boost::true_type {};
+  : std::true_type {};
+
+template<typename T, size_t size>
+struct is_multi_array<boost::const_multi_array_ref<T, size>> : std::true_type{};
 
 /**
  * Data type is a Random Access Container
@@ -176,11 +182,11 @@ struct is_multi_array<boost::multi_array<T, size, Alloc> >
  */
 template <typename T>
 struct is_vector
-  : boost::false_type {};
+  : std::false_type {};
 
 template <typename T, typename Alloc>
 struct is_vector<std::vector<T, Alloc> >
-  : boost::true_type {};
+  : std::true_type {};
 
 
 /**
