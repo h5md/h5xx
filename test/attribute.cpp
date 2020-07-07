@@ -132,12 +132,12 @@ BOOST_AUTO_TEST_CASE( scalar_cstring )
     BOOST_CHECK(read_attribute<std::string>(file, "scalar, cstring, spacepad") == cstring);
 //    BOOST_CHECK(read_attribute<std::string>(file, "scalar, cstring, empty") == "");
 }
+#include <boost/mpl/list.hpp>
 
-BOOST_AUTO_TEST_CASE( array_int )
+using test_types = boost::mpl::list<boost::array<int, 2>, std::array<int, 2>>;
+BOOST_AUTO_TEST_CASE_TEMPLATE( array_int, int_array_type, test_types)
 {
-    typedef boost::array<int, 2> int_array_type;
-    typedef boost::array<double, 2> double_array_type;
-    double_array_type wrong_array = {{1, 2}};
+    int_array_type wrong_array = {{1, 2}};
     int_array_type int_array = {{ 1233, 12344}};
     BOOST_CHECK_NO_THROW(write_attribute(file, "array, int", wrong_array));          // write wrong array first
     BOOST_CHECK_NO_THROW(write_attribute(file, "array, int", int_array));            // overwrite with correct array
